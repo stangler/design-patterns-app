@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint --debug --cache --cache-location node_modules/.cache/eslint/ --cache-strategy content .",
+    "lint:timing": "TIMING=1 eslint --debug"
   },
   "dependencies": {
     "next": "16.1.6",
