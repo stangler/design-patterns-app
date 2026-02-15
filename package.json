@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --debug --cache --cache-location node_modules/.cache/eslint/ --cache-strategy content .",
-    "lint:timing": "TIMING=1 eslint --debug"
+    "lint:timing": "TIMING=1 eslint --debug",
+    "test": "vitest",
+    "test:watch": "vitest --watch"
   },
   "dependencies": {
     "next": "16.1.6",
@@ -21,6 +23,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "jsdom": "^28.1.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.0.18"
