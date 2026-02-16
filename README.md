@@ -1,36 +1,215 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# デザインパターン学習サイト
 
-## Getting Started
+デザインパターンを学習し、理解を深めるためのインタラクティブな学習サイトです。
 
-First, run the development server:
+## プロジェクト概要
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+このプロジェクトはNext.jsを使用して構築されたデザインパターン学習プラットフォームです。ユーザーはサインインして様々なデザインパターンを学習し、理解を深めることができます。
+
+### 主な機能
+
+- **デザインパターン学習**: 様々なデザインパターンの学習コンテンツ
+- **ユーザー認証**: Supabaseによる認証機能
+- **インタラクティブな学習**: クイズや学習進捗の管理
+- **多言語対応**: 日本語と英語の切り替え
+- **ダークモード**: ライト/ダークテーマの切り替え
+
+## 使用技術
+
+### フロントエンド
+- **Next.js 16.1.6**: Reactフレームワーク
+- **React 19.2.3**: UIライブラリ
+- **TypeScript 5**: 型付け言語
+- **Tailwind CSS 4**: スタイリングフレームワーク
+- **Supabase**: 認証とデータベース
+
+### 開発ツール
+- **Vitest**: テストフレームワーク
+- **ESLint**: コード品質チェック
+- **Playwright**: E2Eテスト
+
+## プロジェクト構成
+
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── auth/              # 認証関連ページ
+│   ├── patterns/          # デザインパターンページ
+│   ├── layout.tsx         # ルートレイアウト
+│   └── page.tsx           # ホームページ
+├── components/            # Reactコンポーネント
+│   ├── auth/             # 認証コンポーネント
+│   ├── layout/           # レイアウトコンポーネント
+│   └── patterns/         # パターン関連コンポーネント
+├── hooks/                # カスタムフック
+├── lib/                  # ライブラリ関数
+├── types/                # TypeScript型定義
+└── utils/                # ユーティリティ関数
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## デザインパターン
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+現在実装されているデザインパターン:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Singleton**: インスタンスが1つだけ作成されることを保証するパターン
+2. **Factory Method**: オブジェクト作成のためのインターフェースを定義するパターン
+3. **Observer**: オブジェクト間に1対多の依存関係を定義するパターン
 
-## Learn More
+各パターンには以下が含まれます:
+- 意図と動機
+- 構造と参加者
+- 結果と実装
+- サンプルコードと実世界の例
+- 関連パターンと難易度
 
-To learn more about Next.js, take a look at the following resources:
+## 認証機能
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Supabaseを使用して以下の機能を提供:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- メール/パスワードによるサインアップとサインイン
+- パスワードリセット
+- メール認証
+- セッション管理
 
-## Deploy on Vercel
+## 学習機能
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- パターンの検索とフィルタリング
+- 学習進捗の管理
+- クイズ機能
+- お気に入り機能
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 環境構築
+
+### 前提条件
+
+- Node.js 18以上
+- pnpm (推奨) または npm/yarn
+
+### インストール
+
+```bash
+# 依存関係のインストール
+pnpm install
+
+# 環境変数の設定
+cp .env.local.example .env.local
+# .env.local を編集してSupabaseのURLとAnon Keyを設定
+```
+
+### 開発サーバーの起動
+
+```bash
+pnpm dev
+```
+
+[http://localhost:3000](http://localhost:3000) にアクセスしてアプリケーションを確認できます。
+
+### ビルド
+
+```bash
+pnpm build
+```
+
+### テスト
+
+```bash
+# 単体テスト
+pnpm test
+
+# ウォッチモード
+pnpm test:watch
+
+# タイプチェック
+pnpm type-check
+
+
+# E2E
+pnpm exec playwright test
+```
+
+## テスト結果
+
+- **vitest**: テスト結果は `test-results/` ディレクトリに保存されます
+- **Playwright**: E2Eテスト結果は `playwright-report/` ディレクトリに保存されます
+
+## ディレクトリ構成詳細
+
+### `src/app/`
+- `layout.tsx`: アプリケーションのルートレイアウト
+- `page.tsx`: ホームページ
+- `auth/`: 認証関連ページ
+- `patterns/`: デザインパターンページ
+
+### `src/components/`
+- `auth/`: 認証コンポーネント
+- `layout/`: レイアウトコンポーネント
+- `patterns/`: パターン関連コンポーネント
+
+### `src/hooks/`
+- `useAuth.ts`: 認証フック
+- `useAuthSession.ts`: セッション管理フック
+- `useAuthError.ts`: エラーハンドリングフック
+
+### `src/lib/`
+- `auth.ts`: 認証ロジック
+- `auth-utils.ts`: 認証ユーティリティ
+- `supabase.ts`: Supabaseクライアント設定
+
+### `src/types/`
+- `designPatterns.ts`: デザインパターン関連の型定義
+
+### `src/utils/`
+- `patterns.ts`: デザインパターンデータとユーティリティ関数
+
+## 学習進捗
+
+ユーザーは以下のことができます:
+- 学習済みのパターンをマーク
+- 学習時間を記録
+- クイズ結果を保存
+- お気に入りパターンを管理
+
+## カスタマイズ
+
+### 新しいデザインパターンの追加
+
+1. `src/types/designPatterns.ts` に型を追加
+2. `src/utils/patterns.ts` にパターンデータを追加
+3. 必要に応じてコンポーネントを更新
+
+### スタイリングのカスタマイズ
+
+Tailwind CSSを使用しているため、以下の方法でカスタマイズ可能:
+
+```bash
+# Tailwindの構成を生成
+npx tailwindcss init
+```
+
+## デプロイ
+
+Vercelへのデプロイが推奨されています:
+
+1. Vercelアカウントを作成
+2. GitHubリポジトリを接続
+3. 環境変数を設定
+4. 自動デプロイを有効化
+
+## ライセンス
+
+このプロジェクトはMITライセンスの下で提供されています。
+
+## 貢献
+
+プルリクエストは大歓迎です。貢献する前にIssueを作成して議論してください。
+
+## 連絡先
+
+質問やフィードバックがある場合は、プロジェクトのメンテナーに連絡してください。
+
+## バージョン履歴
+
+- **0.1.0**: 初期リリース
+  - 基本的なデザインパターン学習機能
+  - ユーザー認証
+  - 学習進捗管理
