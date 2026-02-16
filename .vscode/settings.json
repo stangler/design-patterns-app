@@ -1,0 +1,21 @@
+{
+    "zenMode.silentNotifications": false,
+    "accessibility.accessibleView.closeOnKeyPress": false,
+    "accessibility.verbosity.hover": false,
+    "accessibility.verbosity.inlineCompletions": false,
+    "accessibility.verbosity.notification": false,
+    "accessibility.verbosity.sourceControl": false,
+    "accessibility.verbosity.terminal": false,
+    "accessibility.verbosity.terminalChatOutput": false,
+    "accessibility.verbosity.comments": false,
+    "accessibility.verbosity.debug": false,
+    "accessibility.verbosity.diffEditor": false,
+    "accessibility.verbosity.diffEditorActive": false,
+    "accessibility.verbosity.emptyEditorHint": false,
+    "accessibility.verbosity.inlineChat": false,
+    "accessibility.verbosity.keybindingsEditor": false,
+    "accessibility.verbosity.notebook": false,
+    "accessibility.verbosity.panelChat": false,
+    "accessibility.verbosity.replEditor": false,
+    "accessibility.verbosity.walkthrough": false
+}

@@ -23,15 +23,21 @@ export default function EmailVerification() {
       setMessage('メールを確認しています...');
 
       try {
-        const { error } = await fetch('/api/auth/verify', {
+        const response = await fetch('/api/auth/verify', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ token_hash: tokenHash }),
-        }).then(res => res.json());
+        });
 
-        if (error) {
+        if (!response.ok) {
+          throw new Error('メール確認中にエラーが発生しました');
+        }
+
+        const data = await response.json();
+
+        if (data.error) {
           setMessage('メール確認中にエラーが発生しました');
         } else {
           setMessage('メール認証が完了しました！');
@@ -39,7 +45,8 @@ export default function EmailVerification() {
             router.push('/patterns');
           }, 2000);
         }
-      } catch {
+      } catch (error) {
+        console.error('Email verification error:', error);
         setMessage('メール確認中にエラーが発生しました');
       } finally {
         setIsVerifying(false);

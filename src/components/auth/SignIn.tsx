@@ -24,11 +24,12 @@ export default function SignIn() {
       const { error } = await signIn(email, password);
       
       if (error) {
-        setMessage(String(error));
+        setMessage(error.message);
       } else {
         router.push('/patterns');
       }
-    } catch {
+    } catch (error) {
+      console.error('Sign in error:', error);
       setMessage('サインイン中にエラーが発生しました');
     } finally {
       setIsSubmitting(false);
