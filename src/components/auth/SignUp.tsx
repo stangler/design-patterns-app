@@ -33,14 +33,15 @@ export default function SignUp() {
       const { error } = await signUp(email, password);
       
       if (error) {
-        setMessage(String(error));
+        setMessage(error.message);
       } else {
         setMessage('確認メールを送信しました。メールをご確認ください。');
         setEmail('');
         setPassword('');
         setConfirmPassword('');
       }
-    } catch {
+    } catch (error) {
+      console.error('Sign up error:', error);
       setMessage('サインアップ中にエラーが発生しました');
     } finally {
       setIsSubmitting(false);

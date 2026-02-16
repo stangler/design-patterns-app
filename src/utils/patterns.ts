@@ -1,4 +1,4 @@
-import { DesignPattern, PatternCategory, DifficultyLevel } from '@/types/designPatterns';
+import { DesignPattern, PatternCategory, DifficultyLevel, LearningProgress } from '@/types/designPatterns';
 
 // サンプルデザインパターンデータ
 export const designPatterns: DesignPattern[] = [
@@ -18,7 +18,12 @@ export const designPatterns: DesignPattern[] = [
     realWorldExample: '設定管理クラス、データベース接続プール、ロギングクラスなど',
     relatedPatterns: ['Abstract Factory', 'Builder', 'Prototype'],
     difficulty: DifficultyLevel.Beginner,
-    popularity: 8
+    popularity: 8,
+    createdAt: new Date('2024-01-15'),
+    updatedAt: new Date('2024-01-20'),
+    tags: ['creational', 'singleton', 'instance'],
+    prerequisites: [],
+    alternatives: ['Multiton']
   },
   {
     id: 'factory-method',
@@ -49,7 +54,12 @@ class ConcreteCreator1 extends Creator {
     realWorldExample: 'ドキュメントエディタのフレームワーク、GUIコンポーネントの作成、データベース接続の作成',
     relatedPatterns: ['Abstract Factory', 'Template Method', 'Prototype'],
     difficulty: DifficultyLevel.Intermediate,
-    popularity: 7
+    popularity: 7,
+    createdAt: new Date('2024-01-16'),
+    updatedAt: new Date('2024-01-22'),
+    tags: ['creational', 'factory', 'method'],
+    prerequisites: ['Singleton'],
+    alternatives: ['Abstract Factory', 'Builder']
   },
   {
     id: 'observer',
@@ -67,12 +77,86 @@ class ConcreteCreator1 extends Creator {
     realWorldExample: 'イベント処理システム、株価情報配信、ニュース購読サービス',
     relatedPatterns: ['Mediator', 'Chain of Responsibility', 'State'],
     difficulty: DifficultyLevel.Intermediate,
-    popularity: 9
+    popularity: 9,
+    createdAt: new Date('2024-01-17'),
+    updatedAt: new Date('2024-01-25'),
+    tags: ['behavioral', 'observer', 'notification'],
+    prerequisites: [],
+    alternatives: ['Publish-Subscribe']
   }
 ];
 
 export function getDesignPatterns(): DesignPattern[] {
   return designPatterns;
+}
+
+export function getPatternWithDetails(id: string): DesignPattern | undefined {
+  const pattern = getPatternById(id);
+  if (!pattern) return undefined;
+
+  return {
+    ...pattern,
+    prerequisites: pattern.prerequisites || [],
+    alternatives: pattern.alternatives || [],
+    tags: pattern.tags || [],
+    createdAt: pattern.createdAt || new Date(),
+    updatedAt: pattern.updatedAt || new Date()
+  };
+}
+
+export function searchPatternsAdvanced(
+  query: string,
+  options: {
+    category?: PatternCategory[];
+    difficulty?: DifficultyLevel[];
+    tags?: string[];
+    minPopularity?: number;
+  } = {}
+): DesignPattern[] {
+  const lowerQuery = query.toLowerCase();
+  return designPatterns.filter(pattern => {
+    const matchesQuery = 
+      pattern.name.toLowerCase().includes(lowerQuery) ||
+      pattern.description.toLowerCase().includes(lowerQuery) ||
+      pattern.intent.toLowerCase().includes(lowerQuery);
+
+    const matchesCategory = !options.category || options.category.includes(pattern.category);
+    const matchesDifficulty = !options.difficulty || options.difficulty.includes(pattern.difficulty);
+    const matchesTags = !options.tags || options.tags.some(tag => pattern.tags?.includes(tag) || false);
+    const matchesPopularity = !options.minPopularity || (pattern.popularity >= options.minPopularity);
+
+    return matchesQuery && matchesCategory && matchesDifficulty && matchesTags && matchesPopularity;
+  });
+}
+
+export function getLearningProgress(userId: string, patternId: string): LearningProgress | undefined {
+  // 仮の実装、実際はAPIやデータベースから取得
+  return {
+    patternId,
+    completed: false,
+    timeSpent: 0,
+    quizResults: []
+  };
+}
+
+export function updateLearningProgress(
+  userId: string,
+  patternId: string,
+  progress: Partial<LearningProgress>
+): LearningProgress {
+  // 仮の実装、実際はAPIやデータベースに保存
+  const currentProgress = getLearningProgress(userId, patternId) || {
+    patternId,
+    completed: false,
+    timeSpent: 0,
+    quizResults: []
+  };
+
+  return {
+    ...currentProgress,
+    ...progress,
+    completedAt: progress.completed ? new Date() : currentProgress.completedAt
+  };
 }
 
 export function getPatternById(id: string): DesignPattern | undefined {
