@@ -113,6 +113,9 @@ pnpm build
 ### テスト
 
 ```bash
+# Eslint
+pnpm lint
+
 # 単体テスト
 pnpm test
 

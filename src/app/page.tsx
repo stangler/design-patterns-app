@@ -2,6 +2,7 @@
 
 import { designPatterns } from '@/utils/patterns';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useAuth } from '@/components/auth/AuthProvider';
 
 export default function Home() {
@@ -72,26 +73,26 @@ export default function Home() {
           </div>
           <div className="flex justify-center gap-4">
             {user ? (
-              <a
+              <Link
                 href="/patterns"
                 className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700"
               >
                 すべてのパターンを見る
-              </a>
+              </Link>
             ) : (
               <>
-                <a
+                <Link
                   href="/auth/sign-in"
                   className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700"
                 >
                   サインイン
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/auth/sign-up"
                   className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-blue-600 bg-white hover:bg-blue-50 border-blue-600"
                 >
                   アカウントを作成
-                </a>
+                </Link>
               </>
             )}
           </div>
