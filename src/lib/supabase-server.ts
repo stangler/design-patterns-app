@@ -38,7 +38,7 @@ export function createMiddlewareClient(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(_cookiesToSet) {
           // ミドルウェアでは Set-Cookie ヘッダーをレスポンスに追加する必要がある
           // この関数はミドルウェア内で使用されるため、ここでは何もしない
           // 実際の Cookie 設定はミドルウェア側で行う
