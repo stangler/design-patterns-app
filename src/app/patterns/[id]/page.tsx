@@ -16,6 +16,13 @@ interface Props {
   }>;
 }
 
+// 静的生成のためのパラメータを生成
+export async function generateStaticParams() {
+  return designPatterns.map((pattern) => ({
+    id: pattern.id,
+  }));
+}
+
 export default async function PatternDetailPage({ params }: Props) {
   // サーバーサイドで認証チェック
   const { user } = await getCurrentUserServer();
@@ -31,26 +38,17 @@ export default async function PatternDetailPage({ params }: Props) {
 
   if (!pattern) return notFound();
 
-  const explanation = await getMarkdownFile(
-    pattern.category,
-    pattern.id,
-    'explanation.md'
-  );
-
-  const question = await getMarkdownFile(
-    pattern.category,
-    pattern.id,
-    'question.md'
-  );
-
+  // 並列でデータを取得
   const solutionCode = getSolutionCode(
     pattern.category,
     pattern.id
   );
 
-  const highlighted =
-    solutionCode &&
-    (await highlightCode(solutionCode));
+  const [explanation, question, highlighted] = await Promise.all([
+    getMarkdownFile(pattern.category, pattern.id, 'explanation.md'),
+    getMarkdownFile(pattern.category, pattern.id, 'question.md'),
+    solutionCode ? highlightCode(solutionCode) : Promise.resolve(null),
+  ]);
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-12">

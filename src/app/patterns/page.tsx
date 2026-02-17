@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { designPatterns } from '@/utils/patterns';
 import { useAuth } from '@/components/auth/AuthProvider';
 
@@ -61,26 +62,26 @@ export default function PatternsPage() {
         
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {patterns.map((pattern) => (
-<a
-  key={pattern.id}
-  href={`/patterns/${pattern.id}`}
-  className="block bg-white dark:bg-zinc-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow hover:bg-blue-50 dark:hover:bg-blue-900"
->
-  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-    {pattern.name}
-  </h2>
-  <p className="text-gray-600 dark:text-gray-300 mb-4">
-    {pattern.description}
-  </p>
-  <div className="flex items-center justify-between">
-    <span className="text-sm bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-2 py-1 rounded">
-      {pattern.category}
-    </span>
-    <span className="text-sm text-gray-500 dark:text-gray-400">
-      {pattern.difficulty}
-    </span>
-  </div>
-</a>
+          <Link
+            key={pattern.id}
+            href={`/patterns/${pattern.id}`}
+            className="block bg-white dark:bg-zinc-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow hover:bg-blue-50 dark:hover:bg-blue-900"
+          >
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              {pattern.name}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              {pattern.description}
+            </p>
+            <div className="flex items-center justify-between">
+              <span className="text-sm bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-2 py-1 rounded">
+                {pattern.category}
+              </span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                {pattern.difficulty}
+              </span>
+            </div>
+          </Link>
           ))}
         </div>
       </div>
