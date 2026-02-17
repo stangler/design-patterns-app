@@ -8,6 +8,7 @@ import {
 import { highlightCode } from '@/lib/highlight';
 import SolutionToggle from '@/components/SolutionToggle';
 import ExerciseSection from '@/components/ExerciseSection';
+import PatternProgressSection from '@/components/learning/PatternProgressSection';
 import { getCurrentUserServer } from '@/lib/auth-server';
 
 interface Props {
@@ -55,6 +56,12 @@ export default async function PatternDetailPage({ params }: Props) {
       <h1 className="text-3xl font-bold">
         {pattern.name}
       </h1>
+
+      {/* 学習進捗 */}
+      <PatternProgressSection
+        patternId={pattern.id}
+        patternName={pattern.name}
+      />
 
       {/* 解説 */}
       {explanation && (

@@ -21,10 +21,26 @@ export default function Navbar() {
     <nav className="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex items-center">
+          <div className="flex items-center gap-6">
             <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
               デザインパターン学習サイト
             </Link>
+            {user && (
+              <div className="flex items-center gap-4">
+                <Link
+                  href="/dashboard"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                >
+                  ダッシュボード
+                </Link>
+                <Link
+                  href="/patterns"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                >
+                  パターン一覧
+                </Link>
+              </div>
+            )}
           </div>
           
           <div className="flex items-center gap-4">
