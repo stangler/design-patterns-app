@@ -12,7 +12,7 @@ interface PatternProgressSectionProps {
 
 export default function PatternProgressSection({
   patternId,
-  patternName,
+  patternName: _patternName,
 }: PatternProgressSectionProps) {
   const { progressMap, updateProgress, loading } = useLearningProgress();
 
