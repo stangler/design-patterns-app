@@ -5,10 +5,10 @@ describe('patterns.ts', () => {
   describe('getDesignPatterns', () => {
     it('すべてのデザインパターンを取得する', () => {
       const patterns = getDesignPatterns();
-      expect(patterns.length).toBeGreaterThan(0); // パターンが存在することを確認
+      expect(patterns.length).toBeGreaterThan(0);
       expect(patterns[0].name).toBe('Singleton');
       expect(patterns[1].name).toBe('Factory Method');
-      expect(patterns[2].name).toBe('Observer');
+      expect(patterns[2].name).toBe('Abstract Factory'); // Creationalの3番目
     });
   });
 

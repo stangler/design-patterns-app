@@ -5,9 +5,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useAuth } from '@/components/auth/AuthProvider';
 
+function shuffleArray<T>(array: T[]): T[] {
+  return [...array].sort(() => Math.random() - 0.5);
+}
+
 export default function Home() {
-  const patterns = designPatterns;
   const { user, loading } = useAuth();
+
+  // 🔥 ランダム6件取得
+  const randomPatterns = shuffleArray(designPatterns).slice(0, 6);
 
   if (loading) {
     return (
@@ -39,38 +45,52 @@ export default function Home() {
             様々なデザインパターンを学習し、理解を深めるためのインタラクティブな学習サイトです。
           </p>
         </div>
+
         <div className="flex flex-col gap-8 w-full">
           <div className="flex flex-col gap-4">
             <h2 className="text-2xl font-semibold text-black dark:text-zinc-50">
-              人気のデザインパターン
+              今日のおすすめデザインパターン
             </h2>
+
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {patterns
-                .filter(pattern => pattern.popularity >= 8)
-                .slice(0, 6)
-                .map((pattern) => (
-                  <div
-                    key={pattern.id}
-                    className="bg-zinc-100 dark:bg-zinc-800 p-6 rounded-lg hover:shadow-md transition-shadow"
-                  >
-                    <h3 className="text-lg font-semibold text-black dark:text-zinc-50 mb-2">
-                      {pattern.name}
-                    </h3>
+              {randomPatterns.map((pattern) => (
+                <div
+                  key={pattern.id}
+                  className="bg-zinc-100 dark:bg-zinc-800 p-6 rounded-lg hover:shadow-md transition-shadow"
+                >
+                  <h3 className="text-lg font-semibold text-black dark:text-zinc-50 mb-2">
+                    {pattern.name}
+                  </h3>
+
+                  {pattern.description && (
                     <p className="text-sm text-zinc-600 dark:text-zinc-400">
                       {pattern.description}
                     </p>
-                    <div className="mt-4 flex items-center justify-between">
-                      <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-2 py-1 rounded">
-                        {pattern.category}
-                      </span>
+                  )}
+
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-2 py-1 rounded">
+                      {pattern.category}
+                    </span>
+
+                    {pattern.difficulty && (
                       <span className="text-xs text-zinc-500">
                         {pattern.difficulty}
                       </span>
-                    </div>
+                    )}
                   </div>
-                ))}
+
+                  <Link
+                    href={`/patterns/${pattern.id}`}
+                    className="mt-4 inline-block text-sm text-blue-600 hover:underline"
+                  >
+                    詳しく見る →
+                  </Link>
+                </div>
+              ))}
             </div>
           </div>
+
           <div className="flex justify-center gap-4">
             {user ? (
               <Link
