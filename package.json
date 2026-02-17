@@ -10,6 +10,7 @@
     "lint:timing": "TIMING=1 eslint --debug",
     "test": "vitest",
     "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -26,9 +27,12 @@
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "4.0.18",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "jsdom": "^28.1.0",

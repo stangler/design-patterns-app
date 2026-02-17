@@ -20,5 +20,11 @@ export default defineConfig({
       '**/*.spec.tsx',
       '**/e2e/**',
     ],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html'],
+      include: ['src/utils/**', 'src/lib/**', 'src/hooks/**'],
+      exclude: ['src/**/__tests__/**'],
+    },
   },
 });
