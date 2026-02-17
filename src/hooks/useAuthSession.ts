@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { User } from '@/lib/auth';
-import { supabase } from '@/lib/supabase';
+import { getSupabaseClient } from '@/lib/supabase-client';
 import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
 
 export function useAuthSession() {
@@ -9,6 +9,7 @@ export function useAuthSession() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const checkUser = useCallback(async () => {
+    const supabase = getSupabaseClient();
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
@@ -57,6 +58,7 @@ export function useAuthSession() {
 
   useEffect(() => {
     // Listen for auth changes
+    const supabase = getSupabaseClient();
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       handleAuthChange
     );
