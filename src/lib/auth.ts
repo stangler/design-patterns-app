@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { getSupabaseClient } from './supabase-client';
 
 export interface User {
   id: string;
@@ -16,6 +16,7 @@ export interface AuthState {
 
 export const auth = {
   async signUp(email: string, password: string) {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -28,6 +29,7 @@ export const auth = {
   },
 
   async signIn(email: string, password: string) {
+    const supabase = getSupabaseClient();
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password
@@ -37,16 +39,19 @@ export const auth = {
   },
 
   async signOut() {
+    const supabase = getSupabaseClient();
     const { error } = await supabase.auth.signOut();
     return { error };
   },
 
   async getCurrentUser() {
+    const supabase = getSupabaseClient();
     const { data: { user }, error } = await supabase.auth.getUser();
     return { user, error };
   },
 
   async resendConfirmationEmail(email: string) {
+    const supabase = getSupabaseClient();
     const { error } = await supabase.auth.resend({
       type: 'signup',
       email: email,
@@ -58,6 +63,7 @@ export const auth = {
   },
 
   async resetPassword(email: string) {
+    const supabase = getSupabaseClient();
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/auth/reset-password`
     });

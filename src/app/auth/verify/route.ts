@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase-server';
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify the email using Supabase
+    const supabase = await createClient();
     const { error } = await supabase.auth.verifyOtp({
       type: 'email',
       token_hash: token_hash
