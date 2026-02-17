@@ -1,0 +1,11 @@
+# ChainOfResponsibility
+
+## 概要
+ChainOfResponsibility パターンの目的と構造を説明する。
+
+## 主な登場人物
+- 役割1
+- 役割2
+
+## 使う場面
+- 具体的なユースケースを書く
