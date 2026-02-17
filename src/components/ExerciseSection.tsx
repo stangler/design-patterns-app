@@ -59,10 +59,10 @@ ${advancedAnswer || '（未入力）'}
   };
 
   return (
-    <section className="space-y-12">
+    <section className="space-y-10">
       {/* 実装課題 */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold">
+      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+        <h2 className="text-2xl font-semibold mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
           実装課題
         </h2>
 
@@ -72,13 +72,13 @@ ${advancedAnswer || '（未入力）'}
             setImplementationAnswer(e.target.value)
           }
           placeholder="実装コードを書いてください..."
-          className="w-full h-48 p-3 border rounded bg-gray-50 dark:bg-gray-800 font-mono"
+          className="w-full h-48 p-4 border rounded-lg bg-white dark:bg-gray-900 font-mono text-sm leading-relaxed focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       </div>
 
       {/* 発展課題 */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold">
+      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+        <h2 className="text-2xl font-semibold mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
           発展課題
         </h2>
 
@@ -88,23 +88,23 @@ ${advancedAnswer || '（未入力）'}
             setAdvancedAnswer(e.target.value)
           }
           placeholder="設計改善案や応用例を書いてください..."
-          className="w-full h-48 p-3 border rounded bg-gray-50 dark:bg-gray-800"
+          className="w-full h-48 p-4 border rounded-lg bg-white dark:bg-gray-900 text-sm leading-relaxed focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       </div>
 
       {/* 完成版プロンプト表示 */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold">
+      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+        <h2 className="text-2xl font-semibold mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
           完成版プロンプト
         </h2>
 
-        <pre className="bg-gray-900 text-gray-100 p-4 rounded overflow-x-auto text-sm whitespace-pre-wrap">
+        <pre className="bg-gray-900 text-gray-100 p-5 rounded-lg overflow-x-auto text-sm whitespace-pre-wrap leading-relaxed">
           {fullPrompt}
         </pre>
 
         <button
           onClick={handleCopy}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
+          className="mt-4 px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           {copied ? 'コピーしました！' : 'プロンプトをコピー'}
         </button>

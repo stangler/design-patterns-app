@@ -8,7 +8,6 @@ import type {
   LearningAction,
   LearningStats,
   CategoryStats,
-  CategoryProgress,
   QuizStats,
   PatternQuizStats,
 } from '@/types/learning';
@@ -305,7 +304,7 @@ export async function getLearningStats(userId: string): Promise<LearningStats> {
  * カテゴリー別統計を計算
  */
 function calculateCategoryStats(progressList: LearningProgress[]): CategoryStats {
-  const categories = ['creational', 'structural', 'behavioral'] as const;
+  const _categories = ['creational', 'structural', 'behavioral'] as const;
   const stats: CategoryStats = {
     creational: { total: 0, completed: 0, inProgress: 0, notStarted: 0 },
     structural: { total: 0, completed: 0, inProgress: 0, notStarted: 0 },

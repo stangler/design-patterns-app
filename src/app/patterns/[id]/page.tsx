@@ -52,8 +52,8 @@ export default async function PatternDetailPage({ params }: Props) {
   ]);
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-12">
-      <h1 className="text-3xl font-bold">
+    <div className="max-w-4xl mx-auto px-6 py-8 space-y-10">
+      <h1 className="text-3xl font-bold pb-4 border-b border-gray-200 dark:border-gray-700">
         {pattern.name}
       </h1>
 
@@ -65,8 +65,8 @@ export default async function PatternDetailPage({ params }: Props) {
 
       {/* 解説 */}
       {explanation && (
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">
+        <section className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+          <h2 className="text-2xl font-semibold mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
             解説
           </h2>
           <div
@@ -80,8 +80,8 @@ export default async function PatternDetailPage({ params }: Props) {
 
       {/* 問題 */}
       {question && (
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">
+        <section className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+          <h2 className="text-2xl font-semibold mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
             問題
           </h2>
           <div
@@ -103,8 +103,8 @@ export default async function PatternDetailPage({ params }: Props) {
 
       {/* 模範解答 */}
       {highlighted && (
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">
+        <section className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+          <h2 className="text-2xl font-semibold mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
             模範解答
           </h2>
           <SolutionToggle html={highlighted} />
