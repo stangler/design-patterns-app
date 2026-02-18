@@ -1,6 +1,7 @@
 'use client';
 
 import type { ActivityData } from '@/lib/learning';
+import { useMemo } from 'react';
 
 interface ActivityCalendarProps {
   activityData: ActivityData[];
@@ -21,10 +22,20 @@ function getDayOfWeek(date: Date): number {
   return date.getDay();
 }
 
-// 指定した月数分の日付配列を生成
+// 日付グリッドのキャッシュ（モジュールレベル）
+const gridCache = new Map<string, Date[][]>();
+
+// 指定した月数分の日付配列を生成（キャッシュ付き）
 function generateDateGrid(months: number): Date[][] {
-  const today = new Date();
-  const startDate = new Date(today);
+  const now = new Date();
+  const todayStr = now.toISOString().split('T')[0];
+  const cacheKey = `${todayStr}-${months}`;
+  
+  if (gridCache.has(cacheKey)) {
+    return gridCache.get(cacheKey)!;
+  }
+  
+  const startDate = new Date(now);
   startDate.setMonth(startDate.getMonth() - months + 1);
   startDate.setDate(1);
 
@@ -39,7 +50,7 @@ function generateDateGrid(months: number): Date[][] {
 
   // 日付を埋めていく
   const current = new Date(startDate);
-  while (current <= today) {
+  while (current <= now) {
     currentWeek.push(new Date(current));
     
     if (getDayOfWeek(current) === 6) {
@@ -56,6 +67,7 @@ function generateDateGrid(months: number): Date[][] {
     grid.push(currentWeek);
   }
 
+  gridCache.set(cacheKey, grid);
   return grid;
 }
 
@@ -63,14 +75,17 @@ export default function ActivityCalendar({
   activityData,
   months = 6,
 }: ActivityCalendarProps) {
-  // 日付ごとの活動数をマップ化
-  const activityMap = new Map<string, number>();
-  for (const item of activityData) {
-    activityMap.set(item.date, item.count);
-  }
+  // 日付ごとの活動数をマップ化（メモ化）
+  const activityMap = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const item of activityData) {
+      map.set(item.date, item.count);
+    }
+    return map;
+  }, [activityData]);
 
-  // 日付グリッドを生成
-  const grid = generateDateGrid(months);
+  // 日付グリッドを生成（メモ化）
+  const grid = useMemo(() => generateDateGrid(months), [months]);
 
   // 月のラベルを生成
   const monthLabels: { month: string; index: number }[] = [];
