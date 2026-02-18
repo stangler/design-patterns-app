@@ -45,6 +45,7 @@ next-env.d.ts
 
 # cline
 .agents
+.cline
 
 # Playwright
 node_modules/

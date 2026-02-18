@@ -4,6 +4,7 @@ import { designPatterns } from '@/utils/patterns';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAuth } from '@/components/auth/AuthProvider';
+import { useMemo } from 'react';
 
 function shuffleArray<T>(array: T[]): T[] {
   return [...array].sort(() => Math.random() - 0.5);
@@ -12,8 +13,11 @@ function shuffleArray<T>(array: T[]): T[] {
 export default function Home() {
   const { user, loading } = useAuth();
 
-  // 🔥 ランダム6件取得
-  const randomPatterns = shuffleArray(designPatterns).slice(0, 6);
+  // ランダム6件取得（メモ化で再レンダリング時の再計算を防止）
+  const randomPatterns = useMemo(
+    () => shuffleArray(designPatterns).slice(0, 6),
+    []
+  );
 
   if (loading) {
     return (

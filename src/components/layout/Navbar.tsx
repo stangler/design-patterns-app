@@ -3,8 +3,9 @@
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { memo } from 'react';
 
-export default function Navbar() {
+const Navbar = memo(function Navbar() {
   const { user, signOut } = useAuth();
   const router = useRouter();
 
@@ -77,4 +78,6 @@ export default function Navbar() {
       </div>
     </nav>
   );
-}
+});
+
+export default Navbar;
