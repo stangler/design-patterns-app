@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import { redirect } from 'next/navigation';
 import { designPatterns } from '@/utils/patterns';
 import {
   getMarkdownFile,
@@ -9,7 +8,6 @@ import { highlightCode } from '@/lib/highlight';
 import SolutionToggle from '@/components/SolutionToggle';
 import ExerciseSection from '@/components/ExerciseSection';
 import PatternProgressSection from '@/components/learning/PatternProgressSection';
-import { getCurrentUserServer } from '@/lib/auth-server';
 
 interface Props {
   params: Promise<{
@@ -25,12 +23,6 @@ export async function generateStaticParams() {
 }
 
 export default async function PatternDetailPage({ params }: Props) {
-  // サーバーサイドで認証チェック
-  const { user } = await getCurrentUserServer();
-  
-  if (!user) {
-    redirect('/auth/sign-in');
-  }
   const { id } = await params;
 
   const pattern = designPatterns.find(
