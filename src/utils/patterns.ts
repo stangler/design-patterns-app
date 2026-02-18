@@ -4,7 +4,7 @@ import type {
 } from '@/types/designPatterns';
 
 // ===================================
-// 一覧データ（23パターン）
+// 一覧データ（22パターン）
 // ===================================
 
 export const designPatterns: DesignPattern[] = [

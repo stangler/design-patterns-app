@@ -3,6 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
 
 // Supabase クライアントをモック
+const mockGetSession = vi.fn();
 const mockGetUser = vi.fn();
 const mockOnAuthStateChange = vi.fn();
 const mockUnsubscribe = vi.fn();
@@ -10,6 +11,7 @@ const mockUnsubscribe = vi.fn();
 vi.mock('@/lib/supabase-client', () => ({
   getSupabaseClient: vi.fn(() => ({
     auth: {
+      getSession: mockGetSession,
       getUser: mockGetUser,
       onAuthStateChange: mockOnAuthStateChange,
     },
@@ -34,6 +36,8 @@ function makeUser(id = 'user-1', email = 'test@example.com') {
 describe('useAuthSession', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // getSession はデフォルトで null セッションを返す
+    mockGetSession.mockResolvedValue({ data: { session: null } });
     // onAuthStateChange はデフォルトで subscription を返す
     mockOnAuthStateChange.mockReturnValue({
       data: { subscription: { unsubscribe: mockUnsubscribe } },
@@ -46,7 +50,7 @@ describe('useAuthSession', () => {
   describe('初期ロード', () => {
     it('ユーザーが存在する場合は user と isAuthenticated:true をセットする', async () => {
       const mockUser = makeUser();
-      mockGetUser.mockResolvedValue({ data: { user: mockUser } });
+      mockGetSession.mockResolvedValue({ data: { session: { user: mockUser } } });
 
       const { result } = renderHook(() => useAuthSession());
 
@@ -64,7 +68,7 @@ describe('useAuthSession', () => {
     });
 
     it('ユーザーが存在しない場合は user:null, isAuthenticated:false をセットする', async () => {
-      mockGetUser.mockResolvedValue({ data: { user: null } });
+      mockGetSession.mockResolvedValue({ data: { session: null } });
 
       const { result } = renderHook(() => useAuthSession());
 
@@ -77,7 +81,7 @@ describe('useAuthSession', () => {
     });
 
     it('例外がスローされた場合は user:null, isAuthenticated:false をセットする', async () => {
-      mockGetUser.mockRejectedValue(new Error('Network error'));
+      mockGetSession.mockRejectedValue(new Error('Network error'));
 
       const { result } = renderHook(() => useAuthSession());
 
@@ -95,14 +99,14 @@ describe('useAuthSession', () => {
   // ===================================
   describe('checkUser', () => {
     it('手動で checkUser を呼ぶと最新のユーザー情報を取得する', async () => {
-      mockGetUser.mockResolvedValue({ data: { user: null } });
+      mockGetSession.mockResolvedValue({ data: { session: null } });
 
       const { result } = renderHook(() => useAuthSession());
 
       await waitFor(() => expect(result.current.loading).toBe(false));
 
       // ユーザーがサインインした状態に変更
-      mockGetUser.mockResolvedValue({ data: { user: makeUser('user-2', 'new@example.com') } });
+      mockGetSession.mockResolvedValue({ data: { session: { user: makeUser('user-2', 'new@example.com') } } });
 
       await act(async () => {
         await result.current.checkUser();
@@ -118,7 +122,7 @@ describe('useAuthSession', () => {
   // ===================================
   describe('onAuthStateChange', () => {
     it('セッションがある場合は user をセットする', async () => {
-      mockGetUser.mockResolvedValue({ data: { user: null } });
+      mockGetSession.mockResolvedValue({ data: { session: null } });
 
       let capturedCallback: ((event: string, session: unknown) => void) | null = null;
       mockOnAuthStateChange.mockImplementation((cb) => {
@@ -143,7 +147,8 @@ describe('useAuthSession', () => {
     });
 
     it('セッションがない場合は user:null をセットする', async () => {
-      mockGetUser.mockResolvedValue({ data: { user: makeUser() } });
+      const mockUser = makeUser();
+      mockGetSession.mockResolvedValue({ data: { session: { user: mockUser } } });
 
       let capturedCallback: ((event: string, session: unknown) => void) | null = null;
       mockOnAuthStateChange.mockImplementation((cb) => {
@@ -164,11 +169,11 @@ describe('useAuthSession', () => {
     });
 
     it('アンマウント時に subscription.unsubscribe が呼ばれる', async () => {
-      mockGetUser.mockResolvedValue({ data: { user: null } });
+      mockGetSession.mockResolvedValue({ data: { session: null } });
 
       const { unmount } = renderHook(() => useAuthSession());
 
-      await waitFor(() => expect(mockGetUser).toHaveBeenCalled());
+      await waitFor(() => expect(mockGetSession).toHaveBeenCalled());
 
       unmount();
 
