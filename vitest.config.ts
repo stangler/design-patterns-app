@@ -1,6 +1,8 @@
 import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  plugins: [react()],
   resolve: {
     alias: {
       '@': '/src',
@@ -9,6 +11,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node', // jsdomはUIコンポーネントのテスト時のみ個別に指定する
+    setupFiles: ['./src/test/setup.ts'],
     exclude: [
       '**/node_modules/**',
       '**/dist/**',

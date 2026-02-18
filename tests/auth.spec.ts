@@ -89,7 +89,7 @@ test.describe('サインインページ', () => {
   test('Supabaseエラー時にエラーメッセージが表示される', async ({ page }) => {
 
     // Supabase認証APIをモック（認証失敗を返す）- beforeEachのモックより優先される（LIFO）
-    await page.route('**/auth/v1/token**', async (route) => {
+    await page.route('**/dwdmalgfmnehjgwobzsv.supabase.co/auth/v1/**', async (route) => {
       await route.fulfill({
         status: 400,
         contentType: 'application/json',
@@ -101,10 +101,11 @@ test.describe('サインインページ', () => {
     });
 
     await page.goto('/auth/sign-in');
+    await expect(page.locator('button[type="submit"]')).toBeVisible({ timeout: 10000 });
 
     await page.locator('input#email').fill('test@example.com');
     await page.locator('input#password').fill('wrongpassword');
-    await page.locator('button[type="submit"]').click({ force: true });
+    await page.locator('button[type="submit"]').click();
 
     // エラーメッセージが表示されることを確認
     const errorMessage = page.locator('.bg-red-100, .bg-red-900');
@@ -114,7 +115,7 @@ test.describe('サインインページ', () => {
   test('サインイン中はボタンが無効化される', async ({ page }) => {
 
     // Supabase認証APIをモック（遅延レスポンス）- beforeEachのモックより優先される（LIFO）
-    await page.route('**/auth/v1/token**', async (route) => {
+    await page.route('**/dwdmalgfmnehjgwobzsv.supabase.co/auth/v1/**', async (route) => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await route.fulfill({
         status: 400,
@@ -124,10 +125,11 @@ test.describe('サインインページ', () => {
     });
 
     await page.goto('/auth/sign-in');
+    await expect(page.locator('button[type="submit"]')).toBeVisible({ timeout: 10000 });
 
     await page.locator('input#email').fill('test@example.com');
     await page.locator('input#password').fill('password123');
-    await page.locator('button[type="submit"]').click({ force: true });
+    await page.locator('button[type="submit"]').click();
 
     // サブミット中はボタンが無効化されテキストが変わる
     await expect(page.locator('button[type="submit"]')).toBeDisabled({ timeout: 10000 });
@@ -168,7 +170,7 @@ test.describe('サインアップページ', () => {
     await page.locator('input#email').fill('test@example.com');
     await page.locator('input#password').fill('password123');
     await page.locator('input#confirmPassword').fill('differentpassword');
-    await page.locator('button[type="submit"]').click({ force: true });
+    await page.locator('button[type="submit"]').click();
 
     await expect(page.getByText('パスワードが一致しません')).toBeVisible({ timeout: 10000 });
   });
@@ -182,7 +184,7 @@ test.describe('サインアップページ', () => {
     await page.locator('input#email').fill('test@example.com');
     await page.locator('input#password').fill('abc');
     await page.locator('input#confirmPassword').fill('abc');
-    await page.locator('button[type="submit"]').click({ force: true });
+    await page.locator('button[type="submit"]').click();
 
     await expect(page.getByText('パスワードは6文字以上で入力してください')).toBeVisible({ timeout: 10000 });
   });
@@ -190,7 +192,7 @@ test.describe('サインアップページ', () => {
   test('サインアップ成功時に確認メールメッセージが表示される', async ({ page }) => {
 
     // Supabase サインアップAPIをモック（成功を返す）- beforeEachのモックより優先される（LIFO）
-    await page.route('**/auth/v1/signup**', async (route) => {
+    await page.route('**/dwdmalgfmnehjgwobzsv.supabase.co/auth/v1/**', async (route) => {
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -203,11 +205,12 @@ test.describe('サインアップページ', () => {
     });
 
     await page.goto('/auth/sign-up');
+    await expect(page.locator('button[type="submit"]')).toBeVisible({ timeout: 10000 });
 
     await page.locator('input#email').fill('test@example.com');
     await page.locator('input#password').fill('password123');
     await page.locator('input#confirmPassword').fill('password123');
-    await page.locator('button[type="submit"]').click({ force: true });
+    await page.locator('button[type="submit"]').click();
 
     await expect(page.getByText('確認メールを送信しました。メールをご確認ください。')).toBeVisible({ timeout: 10000 });
   });
@@ -215,7 +218,7 @@ test.describe('サインアップページ', () => {
   test('サインアップ成功後にフォームがリセットされる', async ({ page }) => {
 
     // Supabase サインアップAPIをモック - beforeEachのモックより優先される（LIFO）
-    await page.route('**/auth/v1/signup**', async (route) => {
+    await page.route('**/dwdmalgfmnehjgwobzsv.supabase.co/auth/v1/**', async (route) => {
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -227,11 +230,12 @@ test.describe('サインアップページ', () => {
     });
 
     await page.goto('/auth/sign-up');
+    await expect(page.locator('button[type="submit"]')).toBeVisible({ timeout: 10000 });
 
     await page.locator('input#email').fill('test@example.com');
     await page.locator('input#password').fill('password123');
     await page.locator('input#confirmPassword').fill('password123');
-    await page.locator('button[type="submit"]').click({ force: true });
+    await page.locator('button[type="submit"]').click();
 
     // フォームがリセットされることを確認
     await expect(page.locator('input#email')).toHaveValue('', { timeout: 10000 });
@@ -242,7 +246,7 @@ test.describe('サインアップページ', () => {
   test('サインアップ中はボタンが無効化される', async ({ page }) => {
 
     // Supabase サインアップAPIをモック（遅延レスポンス）- beforeEachのモックより優先される（LIFO）
-    await page.route('**/auth/v1/signup**', async (route) => {
+    await page.route('**/dwdmalgfmnehjgwobzsv.supabase.co/auth/v1/**', async (route) => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await route.fulfill({
         status: 200,
@@ -252,11 +256,12 @@ test.describe('サインアップページ', () => {
     });
 
     await page.goto('/auth/sign-up');
+    await expect(page.locator('button[type="submit"]')).toBeVisible({ timeout: 10000 });
 
     await page.locator('input#email').fill('test@example.com');
     await page.locator('input#password').fill('password123');
     await page.locator('input#confirmPassword').fill('password123');
-    await page.locator('button[type="submit"]').click({ force: true });
+    await page.locator('button[type="submit"]').click();
 
     await expect(page.locator('button[type="submit"]')).toBeDisabled({ timeout: 10000 });
     await expect(page.locator('button[type="submit"]')).toHaveText('作成中...', { timeout: 10000 });
@@ -289,7 +294,8 @@ test.describe('パスワードリセットページ', () => {
   test('リセットメール送信成功時に成功メッセージが表示される', async ({ page }) => {
 
     // Supabase パスワードリセットAPIをモック - beforeEachのモックより優先される（LIFO）
-    await page.route('**/auth/v1/recover**', async (route) => {
+    // resetPasswordForEmailは /auth/v1/recover または /auth/v1/magiclink エンドポイントを使用
+    await page.route('**/dwdmalgfmnehjgwobzsv.supabase.co/auth/v1/**', async (route) => {
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -298,9 +304,10 @@ test.describe('パスワードリセットページ', () => {
     });
 
     await page.goto('/auth/reset-password');
+    await expect(page.locator('button[type="submit"]')).toBeVisible({ timeout: 10000 });
 
     await page.locator('input#email').fill('test@example.com');
-    await page.locator('button[type="submit"]').click({ force: true });
+    await page.locator('button[type="submit"]').click();
 
     await expect(
       page.getByText('パスワードリセットメールを送信しました。メールをご確認ください。')
