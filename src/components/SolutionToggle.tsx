@@ -20,7 +20,7 @@ export default function SolutionToggle({ html }: Props) {
 
       {open && (
         <div
-          className="overflow-x-auto"
+          className="prose dark:prose-invert max-w-none overflow-x-auto"
           dangerouslySetInnerHTML={{ __html: html }}
         />
       )}

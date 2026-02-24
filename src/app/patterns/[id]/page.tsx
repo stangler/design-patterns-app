@@ -37,10 +37,11 @@ export default async function PatternDetailPage({ params }: Props) {
     pattern.id
   );
 
-  const [explanation, question, highlighted] = await Promise.all([
+  const [explanation, question, highlighted, advancedSolution] = await Promise.all([
     getMarkdownFile(pattern.category, pattern.id, 'explanation.md'),
     getMarkdownFile(pattern.category, pattern.id, 'question.md'),
     solutionCode ? highlightCode(solutionCode) : Promise.resolve(null),
+    getMarkdownFile(pattern.category, pattern.id, 'advanced-solution.md'),
   ]);
 
   return (
@@ -100,6 +101,16 @@ export default async function PatternDetailPage({ params }: Props) {
             模範解答
           </h2>
           <SolutionToggle html={highlighted} />
+        </section>
+      )}
+
+      {/* 発展課題 模範解答 */}
+      {advancedSolution && (
+        <section className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6">
+          <h2 className="text-2xl font-semibold mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">
+            発展課題 模範解答
+          </h2>
+          <SolutionToggle html={advancedSolution.contentHtml} />
         </section>
       )}
     </div>
