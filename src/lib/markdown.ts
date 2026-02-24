@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import remarkGfm from 'remark-gfm';
 
 function getBasePath(category: string, id: string) {
   return path.join(
@@ -35,6 +36,7 @@ export async function getMarkdownFile(
   const { data, content } = matter(fileContents);
 
   const processedContent = await remark()
+    .use(remarkGfm)
     .use(html)
     .process(content);
 
