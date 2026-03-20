@@ -4,7 +4,7 @@ import type {
 } from '@/types/designPatterns';
 
 // ===================================
-// 一覧データ（22パターン）
+// 一覧データ（23パターン）
 // ===================================
 
 export const designPatterns: DesignPattern[] = [
@@ -27,6 +27,7 @@ export const designPatterns: DesignPattern[] = [
   // ===== Behavioral =====
   { id: 'chain-of-responsibility', name: 'Chain of Responsibility', category: 'behavioral', description: 'リクエストをハンドラーチェーンに渡す。', difficulty: 3 },
   { id: 'command', name: 'Command', category: 'behavioral', description: 'リクエストをオブジェクトとしてカプセル化する。', difficulty: 2 },
+  { id: 'interpreter', name: 'Interpreter', category: 'behavioral', description: '言語の文法をクラス構造で表現し文を解釈・実行する。', difficulty: 3 },
   { id: 'iterator', name: 'Iterator', category: 'behavioral', description: '要素に順次アクセスする。', difficulty: 1 },
   { id: 'mediator', name: 'Mediator', category: 'behavioral', description: '直接的な依存関係を減らす。', difficulty: 3 },
   { id: 'memento', name: 'Memento', category: 'behavioral', description: 'オブジェクトの状態を保存する。', difficulty: 3 },

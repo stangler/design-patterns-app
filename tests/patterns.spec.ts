@@ -152,9 +152,9 @@ test.describe('パターン一覧ページ（認証済み）', () => {
   test('パターンカードが複数表示される', async ({ page }) => {
     await page.goto('/patterns');
 
-    // 22パターンが存在するのでカードが複数表示される
+    // 23パターンが存在するのでカードが複数表示される
     const patternCards = page.locator('a[href^="/patterns/"]');
-    await expect(patternCards).toHaveCount(22, { timeout: 10000 });
+    await expect(patternCards).toHaveCount(23, { timeout: 10000 });
   });
 
   test('Singletonパターンのカードが表示される', async ({ page }) => {

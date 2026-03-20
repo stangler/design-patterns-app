@@ -7,7 +7,7 @@ import {
 } from '@/utils/patterns';
 
 const VALID_CATEGORIES = ['creational', 'structural', 'behavioral'] as const;
-const TOTAL_PATTERN_COUNT = 22;
+const TOTAL_PATTERN_COUNT = 23;
 
 describe('patterns.ts', () => {
   // ===================================
