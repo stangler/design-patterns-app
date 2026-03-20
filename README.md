@@ -32,7 +32,6 @@
 - **Playwright**: E2Eテスト
 
 ## プロジェクト構成
-
 ```
 src/
 ├── app/                    # Next.js App Router
@@ -84,6 +83,7 @@ src/
 |---------|--------|------|
 | Chain of Responsibility | ★★★ | リクエストをハンドラーチェーンに渡す |
 | Command | ★★☆ | リクエストをオブジェクトとしてカプセル化する |
+| Interpreter | ★★★ | 言語の文法をクラス構造で表現し文を解釈・実行する |
 | Iterator | ★☆☆ | 要素に順次アクセスする |
 | Mediator | ★★★ | 直接的な依存関係を減らす |
 | Memento | ★★★ | オブジェクトの状態を保存する |
@@ -133,7 +133,6 @@ Supabaseを使用して以下の機能を提供:
 - pnpm (推奨) または npm/yarn
 
 ### インストール
-
 ```bash
 # 依存関係のインストール
 pnpm install
@@ -144,7 +143,6 @@ cp .env.local.example .env.local
 ```
 
 ### 開発サーバーの起動
-
 ```bash
 pnpm dev
 ```
@@ -152,13 +150,11 @@ pnpm dev
 [http://localhost:3000](http://localhost:3000) にアクセスしてアプリケーションを確認できます。
 
 ### ビルド
-
 ```bash
 pnpm build
 ```
 
 ### テスト
-
 ```bash
 # ESLint
 pnpm lint
